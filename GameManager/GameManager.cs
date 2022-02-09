@@ -7,7 +7,6 @@ public class GameManager : Node2D
   [Export] private Array<PackedScene> levels;
 
   private static GameManager Instance { get; set; } // Crap Singleton
-  private Viewport viewport;
   private int score;
   
   public GameManager()
@@ -18,7 +17,6 @@ public class GameManager : Node2D
   public override void _Ready()
   {
     base._Ready();
-    viewport = GetNode<Viewport>("/root/Main/ViewportContainer/Viewport");
   }
 
   public static void NewGame()
@@ -44,19 +42,20 @@ public class GameManager : Node2D
     else
     {
       var level = levels[CurrentLevel].Instance();
-      ClearViewport();
-
-      viewport.AddChild(level);
+      ReconfigureViewportWithLevel(level);
     }
   }
 
-  private void ClearViewport()
+  private void ReconfigureViewportWithLevel(Node level)
   {
+    var viewport = GetNode<Viewport>("/root/Main/ViewportContainer/Viewport");
     foreach (Node child in viewport.GetChildren())
     {
       viewport.RemoveChild(child);
       child.QueueFree();
     }
+
+    viewport.AddChild(level);
   }
 
   private void LoadTitle()
@@ -64,16 +63,7 @@ public class GameManager : Node2D
     Instance.GetTree().ChangeScene("res://data/scenes/Main.tscn");
   }
 
-  private int currentLevel;
-  private int CurrentLevel
-  {
-    get => currentLevel;
-    set
-    {
-      currentLevel = value;
-      // TODO: SaveSettings();
-    }
-  }
+  private int CurrentLevel { get; set; }
 
   public static int Score => Instance.score;
   

@@ -1,7 +1,6 @@
 using Godot;
-using System;
 
-public class Title : Control
+public class Complete : Control
 {
   private AudioStream buttonSfx;
   private Node audioManager;
@@ -11,6 +10,7 @@ public class Title : Control
     base._Ready();
     buttonSfx = ResourceLoader.Load<AudioStream>("res://data/sfx/blip14.wav");
     audioManager = GetNode("/root/AudioManager");
+    GetNode<Label>("VBoxContainer/CenterContainer/GridContainer/ScoreLabel").Text = $"{GameManager.Score}";
   }
 
   public override void _UnhandledInput(InputEvent @event)
@@ -20,6 +20,6 @@ public class Title : Control
     if (!@event.IsActionPressed("5")) return;
 
     audioManager.Call("play_sfx", buttonSfx);
-    GameManager.NewGame();
+    GameManager.LoadNextLevel();
   }
 }

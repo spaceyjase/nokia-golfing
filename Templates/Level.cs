@@ -23,9 +23,15 @@ public class Level : Node2D
   private UI ui;
   private LevelState state;
   private float power;
+  private Node audioManager;
 
   private float holeDirection;
   private bool complete;
+  private AudioStream readySfx;
+  private AudioStream shotSfx;
+  private AudioStream stopSfx;
+  private AudioStream holeSfx;
+  private AudioStream buttonSfx;
 
   public override void _Ready()
   {
@@ -35,6 +41,13 @@ public class Level : Node2D
     arrow = GetNode<Arrow>(nameof(Arrow));
     hole = GetNode<Node2D>("Holes/Hole");
     ui = GetNode<UI>(nameof(UI));
+    audioManager = GetNode("/root/AudioManager");
+    
+    readySfx = ResourceLoader.Load<AudioStream>("res://data/sfx/blip6.wav");
+    shotSfx = ResourceLoader.Load<AudioStream>("res://data/sfx/blip11.wav");
+    stopSfx = ResourceLoader.Load<AudioStream>("res://data/sfx/hit2.wav");
+    holeSfx = ResourceLoader.Load<AudioStream>("res://data/sfx/good3.wav");
+    buttonSfx = ResourceLoader.Load<AudioStream>("res://data/sfx/good1.wav");
 
     arrow.Hide();
     ChangeState(LevelState.SetAngle);
@@ -55,12 +68,15 @@ public class Level : Node2D
         arrow.Show();
         break;
       case LevelState.SetPower:
+        audioManager.Call("play_sfx", readySfx);
         break;
       case LevelState.Shoot:
         arrow.Hide();
+        audioManager.Call("play_sfx", shotSfx);
         ball.Shoot(arrow.Rotation, power);
         break;
       case LevelState.Complete:
+        audioManager.Call("play_sfx", holeSfx);
         complete = true;
         break;
       default:
@@ -85,6 +101,7 @@ public class Level : Node2D
       case LevelState.Shoot:
         break;
       case LevelState.Complete:
+        audioManager.Call("play_sfx", buttonSfx);
         GameManager.LoadNextLevel();
         break;
       default:
@@ -112,12 +129,14 @@ public class Level : Node2D
     }
   }
 
+  // ReSharper disable once UnusedMember.Local
   private void OnBall_Stopped()
   {
     if (complete) return;
     
     ChangeState(LevelState.SetAngle);
     ui.UpdateScore(GameManager.UpdateScore());
+    audioManager.Call("play_sfx", stopSfx);
   }
 
   private void AnimatePower(float delta)
@@ -159,9 +178,6 @@ public class Level : Node2D
     arrow.Rotation = holeDirection;
   }
 
-  private void On_Holes_Victory()
-  {
-    // Level is complete!
-    ChangeState(LevelState.Complete);
-  }
+  // ReSharper disable once UnusedMember.Local
+  private void On_Holes_Victory() => ChangeState(LevelState.Complete); // Level is complete!
 }

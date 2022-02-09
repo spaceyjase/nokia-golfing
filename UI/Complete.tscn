@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://nokia_theme.tres" type="Theme" id=1]
 [ext_resource path="res://Hole/Hole.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/ball.png" type="Texture" id=3]
 [ext_resource path="res://data/fonts/teeny-tiny-pixls-font/TeenyTinyPixls-o2zo.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://UI/Title.cs" type="Script" id=5]
+[ext_resource path="res://UI/Complete.cs" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 1, 1, 1 )
@@ -16,9 +16,15 @@ outline_color = Color( 0, 0, 0, 1 )
 use_mipmaps = true
 font_data = ExtResource( 4 )
 
+[sub_resource type="DynamicFont" id=4]
+size = 5
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
 [sub_resource type="StyleBoxEmpty" id=2]
 
-[node name="Title" type="Control"]
+[node name="Complete" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 1 )
@@ -45,33 +51,49 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 834.0
-margin_bottom = 24.0
+margin_bottom = 12.0
 alignment = 1
 
 [node name="Title" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 389.0
-margin_right = 445.0
-margin_bottom = 24.0
+margin_left = 381.0
+margin_right = 453.0
+margin_bottom = 12.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 3 )
-text = "NOKIA
-GOLFING"
+text = "COMPLETE!"
 align = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 28.0
+margin_top = 16.0
 margin_right = 834.0
-margin_bottom = 45.0
+margin_bottom = 40.0
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer"]
-margin_left = 393.0
-margin_right = 441.0
-margin_bottom = 17.0
+margin_left = 387.0
+margin_right = 447.0
+margin_bottom = 24.0
 custom_constants/vseparation = 3
 
+[node name="Label2" type="Label" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_right = 60.0
+margin_bottom = 6.0
+text = "FINAL SCORE:"
+align = 1
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_top = 9.0
+margin_right = 60.0
+margin_bottom = 15.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "99"
+align = 1
+
 [node name="Panel" type="Panel" parent="VBoxContainer/CenterContainer/GridContainer"]
-margin_right = 48.0
-margin_bottom = 8.0
+visible = false
+margin_top = 9.0
+margin_right = 60.0
+margin_bottom = 17.0
 rect_min_size = Vector2( 16, 8 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -93,8 +115,8 @@ __meta__ = {
 position = Vector2( 27, 6 )
 
 [node name="Label" type="Label" parent="VBoxContainer/CenterContainer/GridContainer"]
-margin_top = 11.0
-margin_right = 48.0
-margin_bottom = 17.0
-text = "[5] to START"
+margin_top = 18.0
+margin_right = 60.0
+margin_bottom = 24.0
+text = "[5] to CONTINUE"
 align = 1
