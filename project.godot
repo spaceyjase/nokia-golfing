@@ -20,6 +20,10 @@ boot_splash/image="res://data/sprites/splash.png"
 boot_splash/use_filter=false
 config/icon="res://icon.png"
 
+[audio]
+
+output_latency.web=15
+
 [autoload]
 
 GameManager="*res://GameManager/GameManager.tscn"
