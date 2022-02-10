@@ -5,4 +5,4 @@ Play 18 holes of golf on the world's most popular mobile phone!
 
 A game for the Nokia Jam 4 on itch.io!
 
-[Link to the Jam](https://itch.io/jam/nokiajam4)
+[Link to the game](https://jason-indie.itch.io/nokia-golfing) | [Link to the Jam](https://itch.io/jam/nokiajam4)
